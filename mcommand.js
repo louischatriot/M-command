@@ -1,3 +1,11 @@
+/*
+ * "M command" bookmarklet, gives you the same functionality as the vim 'm' command but on a webpage
+ * May conflict with websites using keys, such as Github, but you can customize the bindings so that it works with your
+ * favourite websites
+ * Author: Louis Chatriot
+ */
+
+
 var mcommandplugin = mcommandplugin || {};
 mcommandplugin.i;
 mcommandplugin.currentTop = {};
@@ -9,45 +17,65 @@ mcommandplugin.setCommandKey = 77;   // Use 'm' as the command key, as in vim. M
 mcommandplugin.getCommandKey = 222;
 
 
-$(document).ready(function() {
-  mcommandplugin.$body = $('body');
+mcommandplugin.run = function($) {
 
-  // For testing purposes
-  //for (mcommandplugin.i = 0; mcommandplugin.i < 300; mcommandplugin.i += 1) {
-    //mcommandplugin.$body.append('Line number ' + mcommandplugin.i + '<br />');
-  //}
+  $(document).ready(function() {
 
-  $(document).bind('keydown', function(e) {
-    if (mcommandplugin.setCommandPressed) {
-      if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
-        mcommandplugin.currentTop[e.keyCode] = mcommandplugin.$body.scrollTop();
-        mcommandplugin.setCommandPressed = false;
-        mcommandplugin.getCommandPressed = false;
-      } else {
-        mcommandplugin.setCommandPressed = false;
-        mcommandplugin.getCommandPressed = false;
-      }
-    } else if (mcommandplugin.getCommandPressed) {
-      if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
-        if (mcommandplugin.currentTop[e.keyCode] !== null) {
-          mcommandplugin.$body.scrollTop(mcommandplugin.currentTop[e.keyCode]);
+    mcommandplugin.$body = $('body');
+
+    $(document).bind('keydown', function(e) {
+      if (mcommandplugin.setCommandPressed) {
+        if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
+          mcommandplugin.currentTop[e.keyCode] = mcommandplugin.$body.scrollTop();
+          mcommandplugin.setCommandPressed = false;
+          mcommandplugin.getCommandPressed = false;
+        } else {
+          mcommandplugin.setCommandPressed = false;
+          mcommandplugin.getCommandPressed = false;
+        }
+      } else if (mcommandplugin.getCommandPressed) {
+        if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
+          if (mcommandplugin.currentTop[e.keyCode] !== null) {
+            mcommandplugin.$body.scrollTop(mcommandplugin.currentTop[e.keyCode]);
+            mcommandplugin.setCommandPressed = false;
+            mcommandplugin.getCommandPressed = false;
+          }
+        } else {
           mcommandplugin.setCommandPressed = false;
           mcommandplugin.getCommandPressed = false;
         }
       } else {
-        mcommandplugin.setCommandPressed = false;
-        mcommandplugin.getCommandPressed = false;
+        if (e.keyCode === mcommandplugin.setCommandKey) {
+          mcommandplugin.setCommandPressed = true;
+        } else if (e.keyCode === mcommandplugin.getCommandKey) {
+          mcommandplugin.getCommandPressed = true;
+        } else {
+          mcommandplugin.setCommandPressed = false;
+          mcommandplugin.getCommandPressed = false;
+        }
       }
-    } else {
-      if (e.keyCode === mcommandplugin.setCommandKey) {
-        mcommandplugin.setCommandPressed = true;
-      } else if (e.keyCode === mcommandplugin.getCommandKey) {
-        mcommandplugin.getCommandPressed = true;
-      } else {
-        mcommandplugin.setCommandPressed = false;
-        mcommandplugin.getCommandPressed = false;
-      }
-    }
+    });
   });
-});
+
+};
+
+
+
+// Launch the bookmarklet
+(function (app) {
+  //Get jQuery if the current page doesn't have it
+  if( typeof jQuery === 'undefined' || jQuery.fn.jquery.substring(0,3) !== '1.7') {
+
+    var fileref = document.createElement('script');
+    fileref.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+
+    document.body.appendChild(fileref);
+  }
+
+
+  console.log(mcommandplugin);
+
+  app.run(jQuery);
+}(mcommandplugin));
+
 
