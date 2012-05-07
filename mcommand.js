@@ -12,10 +12,17 @@ mcommandplugin.getCommandKey = 222;
 $(document).ready(function() {
   mcommandplugin.$body = $('body');
 
+  // For testing purposes
+  //for (mcommandplugin.i = 0; mcommandplugin.i < 300; mcommandplugin.i += 1) {
+    //mcommandplugin.$body.append('Line number ' + mcommandplugin.i + '<br />');
+  //}
+
   $(document).bind('keydown', function(e) {
     if (mcommandplugin.setCommandPressed) {
       if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
         mcommandplugin.currentTop[e.keyCode] = mcommandplugin.$body.scrollTop();
+        mcommandplugin.setCommandPressed = false;
+        mcommandplugin.getCommandPressed = false;
       } else {
         mcommandplugin.setCommandPressed = false;
         mcommandplugin.getCommandPressed = false;
@@ -24,6 +31,8 @@ $(document).ready(function() {
       if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
         if (mcommandplugin.currentTop[e.keyCode] !== null) {
           mcommandplugin.$body.scrollTop(mcommandplugin.currentTop[e.keyCode]);
+          mcommandplugin.setCommandPressed = false;
+          mcommandplugin.getCommandPressed = false;
         }
       } else {
         mcommandplugin.setCommandPressed = false;
@@ -41,5 +50,4 @@ $(document).ready(function() {
     }
   });
 });
-
 
