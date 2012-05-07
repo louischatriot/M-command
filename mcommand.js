@@ -63,19 +63,23 @@ mcommandplugin.run = function($) {
 
 // Launch the bookmarklet
 (function (app) {
+  console.log("M command bookmarklet launched");
+
   //Get jQuery if the current page doesn't have it
-  if( typeof jQuery === 'undefined' || jQuery.fn.jquery.substring(0,3) !== '1.7') {
+  if ( typeof jQuery === 'undefined' || jQuery.fn.jquery.substring(0,3) !== '1.7') {
 
     var fileref = document.createElement('script');
     fileref.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
 
+    fileref.onload = function() {
+      app.run(jQuery);
+    }
+
+
     document.body.appendChild(fileref);
+  } else {
+    app.run(jQuery);
   }
-
-
-  console.log(mcommandplugin);
-
-  app.run(jQuery);
 }(mcommandplugin));
 
 
