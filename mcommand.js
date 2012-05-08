@@ -19,42 +19,40 @@ mcommandplugin.getCommandKey = 222;
 
 mcommandplugin.run = function($) {
 
-  $(document).ready(function() {
+  var resetPressedState = function() { mcommandplugin.setCommandPressed = false; mcommandplugin.getCommandPressed = false; };
 
-    mcommandplugin.$body = $('body');
+  mcommandplugin.$body = $('body');
+  mcommandplugin.$inputs = $('input');
 
-    $(document).bind('keydown', function(e) {
-      if (mcommandplugin.setCommandPressed) {
-        if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
-          mcommandplugin.currentTop[e.keyCode] = mcommandplugin.$body.scrollTop();
-          mcommandplugin.setCommandPressed = false;
-          mcommandplugin.getCommandPressed = false;
-        } else {
-          mcommandplugin.setCommandPressed = false;
-          mcommandplugin.getCommandPressed = false;
-        }
-      } else if (mcommandplugin.getCommandPressed) {
-        if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
-          if (mcommandplugin.currentTop[e.keyCode] !== null) {
-            mcommandplugin.$body.scrollTop(mcommandplugin.currentTop[e.keyCode]);
-            mcommandplugin.setCommandPressed = false;
-            mcommandplugin.getCommandPressed = false;
-          }
-        } else {
-          mcommandplugin.setCommandPressed = false;
-          mcommandplugin.getCommandPressed = false;
-        }
-      } else {
-        if (e.keyCode === mcommandplugin.setCommandKey) {
-          mcommandplugin.setCommandPressed = true;
-        } else if (e.keyCode === mcommandplugin.getCommandKey) {
-          mcommandplugin.getCommandPressed = true;
-        } else {
-          mcommandplugin.setCommandPressed = false;
-          mcommandplugin.getCommandPressed = false;
+  $(document).bind('keydown', function(e) {
+    if (mcommandplugin.$inputs.is(':focus')) {
+      resetPressedState();   // Do nothing if user is typing into an input box
+      return;
+    }
+
+    if (mcommandplugin.setCommandPressed) {
+      if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
+        mcommandplugin.currentTop[e.keyCode] = mcommandplugin.$body.scrollTop();
+      }
+
+      resetPressedState();
+    } else if (mcommandplugin.getCommandPressed) {
+      if ((e.keyCode >= 65) && (e.keyCode <= 90)) {
+        if (mcommandplugin.currentTop[e.keyCode] !== null) {
+          mcommandplugin.$body.scrollTop(mcommandplugin.currentTop[e.keyCode]);
         }
       }
-    });
+
+      resetPressedState();
+    } else {
+      if (e.keyCode === mcommandplugin.setCommandKey) {
+        mcommandplugin.setCommandPressed = true;
+      } else if (e.keyCode === mcommandplugin.getCommandKey) {
+        mcommandplugin.getCommandPressed = true;
+      } else {
+        resetPressedState();
+      }
+    }
   });
 
 };
