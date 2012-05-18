@@ -3,8 +3,8 @@
   "version": "1.0",
   "manifest_version" : 2,
   "description": "Vim style m command for Chrome",
-  "browser_action": [
-    "default_icon": "icon.png"   // TODO: put icon in same folder
-  ],
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
   "permissions": []
 }
