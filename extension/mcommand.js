@@ -22,11 +22,11 @@ mcommandplugin.getCommandKey = 222;
 
 
 //console.log(chrome.windows.onFocusChanged.addListener);
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  console.log("Focus changed for tab " + tabId);
-  console.log(changeInfo);
-  console.log(tab);
-});
+//chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  //console.log("Focus changed for tab " + tabId);
+  //console.log(changeInfo);
+  //console.log(tab);
+//});
 
 
 
@@ -36,7 +36,8 @@ mcommandplugin.run = function($) {
 
   mcommandplugin.$body = $('body');
   mcommandplugin.$inputs = $('input');
-
+console.log("====");
+console.log(mcommandplugin);
   //console.log(chrome.windows.WINDOW_ID_CURRENT);
 
   $(document).bind('keydown', function(e) {
@@ -76,8 +77,14 @@ mcommandplugin.run = function($) {
 
 };
 
+console.log("====");
+
+console.log(jQuery);
+
+mcommandplugin.run(jQuery);
 
 
+/*
 // Launch the bookmarklet
 (function (app) {
   console.log("M command plugin launched");
@@ -98,5 +105,5 @@ mcommandplugin.run = function($) {
     app.run(jQuery);
   }
 }(mcommandplugin));
-
+*/
 
