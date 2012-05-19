@@ -21,12 +21,23 @@ mcommandplugin.setCommandKey = 77;   // Use 'm' as the command key, as in vim. M
 mcommandplugin.getCommandKey = 222;
 
 
+//console.log(chrome.windows.onFocusChanged.addListener);
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  console.log("Focus changed for tab " + tabId);
+  console.log(changeInfo);
+  console.log(tab);
+});
+
+
+
 mcommandplugin.run = function($) {
 
   var resetPressedState = function() { mcommandplugin.setCommandPressed = false; mcommandplugin.getCommandPressed = false; };
 
   mcommandplugin.$body = $('body');
   mcommandplugin.$inputs = $('input');
+
+  //console.log(chrome.windows.WINDOW_ID_CURRENT);
 
   $(document).bind('keydown', function(e) {
 
@@ -69,7 +80,7 @@ mcommandplugin.run = function($) {
 
 // Launch the bookmarklet
 (function (app) {
-  console.log("M command bookmarklet launched");
+  console.log("M command plugin launched");
 
   //Get jQuery if the current page doesn't have it
   if ( typeof jQuery === 'undefined' || jQuery.fn.jquery.substring(0,3) !== '1.7') {

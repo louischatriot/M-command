@@ -9,5 +9,5 @@
   "background": {
     "scripts": ["mcommand.js"]   // TODO: add jQuery
   },
-  "permissions": []
+  "permissions": ["tabs"]
 }
