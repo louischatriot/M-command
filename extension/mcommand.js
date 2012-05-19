@@ -6,9 +6,9 @@
  */
 
 
-alert("WERWEWWEF");
 
 console.log("EWEWRWERW");
+
 
 var mcommandplugin = mcommandplugin || {};
 mcommandplugin.i;
@@ -29,6 +29,10 @@ mcommandplugin.run = function($) {
   mcommandplugin.$inputs = $('input');
 
   $(document).bind('keydown', function(e) {
+
+    console.log("Key pressed");
+
+
     if (mcommandplugin.$inputs.is(':focus')) {
       resetPressedState();   // Do nothing if user is typing into an input box
       return;
@@ -71,7 +75,7 @@ mcommandplugin.run = function($) {
   if ( typeof jQuery === 'undefined' || jQuery.fn.jquery.substring(0,3) !== '1.7') {
 
     var fileref = document.createElement('script');
-    fileref.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+    fileref.src = "jquery-1.7.2.min.js";
 
     fileref.onload = function() {
       app.run(jQuery);
