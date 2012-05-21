@@ -1,5 +1,5 @@
 /*
- * "M command" bookmarklet, gives you the same functionality as the vim 'm' command but on a webpage
+ * "M command" plugin, gives you the same functionality as the vim 'm' command but on a webpage
  * May conflict with websites using keys, such as Github, but you can customize the bindings so that it works with your
  * favourite websites
  * Author: Louis Chatriot
@@ -21,29 +21,14 @@ mcommandplugin.setCommandKey = 77;   // Use 'm' as the command key, as in vim. M
 mcommandplugin.getCommandKey = 222;
 
 
-//console.log(chrome.windows.onFocusChanged.addListener);
-//chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  //console.log("Focus changed for tab " + tabId);
-  //console.log(changeInfo);
-  //console.log(tab);
-//});
-
-
-
-mcommandplugin.run = function($) {
+mcommandplugin.run = function() {
 
   var resetPressedState = function() { mcommandplugin.setCommandPressed = false; mcommandplugin.getCommandPressed = false; };
 
   mcommandplugin.$body = $('body');
   mcommandplugin.$inputs = $('input');
-console.log("====");
-console.log(mcommandplugin);
-  //console.log(chrome.windows.WINDOW_ID_CURRENT);
 
   $(document).bind('keydown', function(e) {
-
-    console.log("Key pressed");
-
 
     if (mcommandplugin.$inputs.is(':focus')) {
       resetPressedState();   // Do nothing if user is typing into an input box
@@ -77,33 +62,8 @@ console.log(mcommandplugin);
 
 };
 
-console.log("====");
-
-console.log(jQuery);
-
-mcommandplugin.run(jQuery);
 
 
-/*
-// Launch the bookmarklet
-(function (app) {
-  console.log("M command plugin launched");
+mcommandplugin.run();
 
-  //Get jQuery if the current page doesn't have it
-  if ( typeof jQuery === 'undefined' || jQuery.fn.jquery.substring(0,3) !== '1.7') {
-
-    var fileref = document.createElement('script');
-    fileref.src = "jquery-1.7.2.min.js";
-
-    fileref.onload = function() {
-      app.run(jQuery);
-    }
-
-
-    document.body.appendChild(fileref);
-  } else {
-    app.run(jQuery);
-  }
-}(mcommandplugin));
-*/
 
