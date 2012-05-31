@@ -7,9 +7,6 @@
 
 
 
-console.log("EWEWRWERW");
-
-
 var mcommandplugin = mcommandplugin || {};
 mcommandplugin.i;
 mcommandplugin.currentTop = {};
